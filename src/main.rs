@@ -402,7 +402,7 @@ fn handle_set(dir: Option<PathBuf>, maps: Vec<String>, templates_dir: Option<Pat
 }
 
 fn main() -> Result<()> {
-    // We use clap to parse arguments and expose two main actions for now: `set`.
+    // We use clap to parse arguments and expose one main action for now: `set`.
     // You can wire this into systemd with a unit file calling `monothematic set ...`.
     let cli = Cli::parse();
     match cli.command {
