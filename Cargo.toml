@@ -19,3 +19,6 @@ serde_yaml = "0.9"
 thiserror = "1"
 humantime = "2"
 tempfile = "3"
+
+# Watch filesystem for changes to Noctalia settings
+notify = "6"

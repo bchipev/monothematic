@@ -1,48 +1,62 @@
 monothematic
 ================
 
-A small Wayland-friendly wallpaper switcher and theme generator.
+A pre-defined theme generator for the Noctalia shell.
 
 What it does:
-- Picks a random image from a user-defined directory (or per-output directories) and sets it as your wallpaper using swaybg (hard requirement).
+- Reads your current wallpaper from Noctalia's settings.
 - Extracts the dominant color from the wallpaper and generates a 20-color OKLCH palette from almost white to not quite black.
-- Writes a theme file next to the image, named `'<image-filename>.theme.toml'`.
-- Optionally renders simple templates (Matugen-like) by replacing placeholders in .tpl files.
+- Generates a Noctalia shell colorscheme at `~/.config/quickshell/noctalia-shell/Assets/ColorScheme/Monothematic/Monothematic.json`.
 
-Install prerequisite (required):
-- Install swaybg and ensure it is on your PATH. This application requires swaybg to set wallpapers.
-  - Arch: pacman -S swaybg
-  - Debian/Ubuntu: apt install swaybg
-  - Fedora: dnf install swaybg
-  - Nix: nix-env -iA nixpkgs.swaybg (or add to your configuration)
+Requirements:
+- Noctalia shell configured and a wallpaper set in `~/.config/noctalia/settings.json`.
 
 Build (from source):
 - Ensure Rust is installed (https://rustup.rs/)
 - Run: cargo build --release
 - Binary: target/release/monothematic
 
-Usage examples:
-- All outputs from one directory:
-  monothematic set --dir /path/to/wallpapers
-- Per-output directories:
-  monothematic set --map eDP-1=/path/laptop --map HDMI-A-1=/path/external
-- With template rendering:
-  monothematic set --dir /path/walls --templates-dir ~/.config/monothematic/templates
+Usage
+-----
 
-Requirements:
-- swaybg must be installed and available on PATH.
+  # Generate from monitor 0 (default)
+  monothematic set
+
+  # Generate from a specific monitor id
+  monothematic set 1
+
+Commands
+- set: Read current Noctalia wallpaper for a monitor and generate a theme file.
+
+Options for `set`
+- <MONITOR_ID> (optional)  Integer id of the monitor to read from Noctalia settings. Defaults to 0.
+
+Noctalia integration
+- Monothematic reads the wallpaper image path for the selected monitor from
+  `~/.config/noctalia/settings.json`, more specifically from `wallpaper.monitors[MONITOR_ID].wallpaper` where `MONITOR_ID` defaults to `0` when not provided.
+
+Noctalia colorscheme
+- A custom Noctalia colorscheme JSON is generated at:
+  ~/.config/quickshell/noctalia-shell/Assets/ColorScheme/Monothematic/Monothematic.json
+- Colors are mapped from a predefined template to your generated palette by closest OKLCH lightness.
+
+Template placeholders
+When using --templates-dir, the following placeholders are available inside .tpl files:
+- {{dominant}}            Hex color (#RRGGBB) of the dominant color
+- {{color0}}..{{color19}}  20-color palette from near-white to near-black (hex)
+- {{name}}                Image file stem (without extension)
 
 Systemd (user) service (example):
 Create ~/.config/systemd/user/monothematic.service with:
 
   [Unit]
-  Description=Monothematic Wallpaper + Theme Service
+  Description=Monothematic Theme Generator Service
   After=graphical-session.target
   Wants=graphical-session.target
 
   [Service]
   Type=simple
-  ExecStart=%h/.cargo/bin/monothematic set --dir /path/to/wallpapers --templates-dir %h/.config/monothematic/templates
+  ExecStart=%h/.cargo/bin/monothematic set
   Restart=on-failure
   RestartSec=2s
 
@@ -54,4 +68,4 @@ Then enable and start:
 - systemctl --user enable --now monothematic.service
 
 Packaging:
-- Coming soon to popular package managers (AUR/Nix/Debian/Fedora, etc.). When packaged, swaybg will be listed as a dependency. For now, install swaybg and build from source as above.
+- Coming soon to popular package managers (AUR/Nix/Debian/Fedora, etc.). For now, build from source as above.
