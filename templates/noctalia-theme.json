@@ -1,0 +1,8 @@
+{
+  "background": "oklch(0.15 0.02 240)",
+  "foreground": "#e0e0e0",
+  "accent": "oklch(0.7 0.05 200)",
+  "error": "oklch(0.7 0.1 29)",
+  "warning": "oklch(0.7 0.1 109)",
+  "success": "oklch(0.7 0.1 142)"
+}

@@ -1,0 +1,7 @@
+/* GTK3 template; colors will be replaced */
+@define-color bg_color oklch(0.12 0.02 240);
+@define-color fg_color #e6e6e6;
+@define-color accent_color oklch(0.7 0.05 200);
+@define-color error_color oklch(0.7 0.1 29);
+@define-color warning_color oklch(0.7 0.1 109);
+@define-color success_color oklch(0.7 0.1 142);

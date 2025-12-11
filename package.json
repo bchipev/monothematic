@@ -1,0 +1,26 @@
+{
+  "name": "monothematic",
+  "version": "0.1.0",
+  "description": "Generate monochromatic themes from your current wallpaper (Noctalia integraton)",
+  "type": "module",
+  "license": "MIT",
+  "bin": {
+    "monothematic": "monothematic"
+  },
+  "scripts": {
+    "build": "bun build src/index.ts --compile --outfile monothematic",
+    "dev": "bun run src/index.ts",
+    "start": "bun run src/index.ts"
+  },
+  "dependencies": {
+    "chokidar": "^3.6.0",
+    "culori": "^4.0.1",
+    "fs-extra": "^11.2.0",
+    "sharp": "^0.33.5"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^22.9.0",
+    "typescript": "^5.6.3"
+  }
+}
