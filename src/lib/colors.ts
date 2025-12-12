@@ -42,9 +42,9 @@ export async function extractDominantOklch(imagePath: string): Promise<Oklch> {
 const LIGHTNESS_STOPS: number[] = Array.from({ length: 25 }, (_, i) => 98 - i * 4).filter((L) => L >= 2);
 
 // Hues for accents in OKLCH (degrees)
-const H_RED = 29;
-const H_YELLOW = 109;
-const H_GREEN = 142;
+const H_RED = 15;
+const H_YELLOW = 100;
+const H_GREEN = 140;
 
 function oklchToNamed(name: string, o: Oklch): NamedColor {
   const rgb = toRgb(o) as any;
